@@ -1,0 +1,26 @@
+username,role,messageType,message
+john_doe,recruiter,connection_request,"Subject: LinkedIn Connection Request
+
+Hi John,
+
+I hope this message finds you well. I came across your profile on LinkedIn and was impressed by your background and experience in [mention specific industry or field if applicable].
+
+I believe that connecting with professionals like yourself can open up opportunities for meaningful networking and collaboration. I would be honored to have you in my network.
+
+If you're open to connecting, I would be delighted to discuss potential ways we can support each other professionally.
+
+Looking forward to the possibility of connecting"
+jane_smith,non-recruiter,dm,"Hey Jane! 👋 Just wanted to reach out and say hi! Your profile caught my eye, and it's great to connect with someone who shares similar interests in the industry. Feel free to message me if you ever want to chat or network. Have a fantastic day! 😊"
+peter_parker,recruiter,connection_request,"Subject: Let's Connect on LinkedIn, Peter Parker!
+
+Hello Peter,
+
+I hope this message finds you well. I came across your profile on LinkedIn and was impressed by your background and experience in [mention specific industry or skill]. As someone who is always looking to expand my professional network and learn from others, I believe connecting with you would be beneficial for both of us.
+
+I would love the opportunity to connect and potentially share insights, collaborate on projects, or simply stay connected within our industry. Please feel"
+bruce_wayne,non-recruiter,dm,"Hey Bruce! 👋 Just wanted to say I checked out your profile and it's impressive! Your experience in the industry is really cool. If you ever want to chat about [specific topic or interest], feel free to reach out. Have a great day! 😊"
+clark_kent,recruiter,connection_request,"Hello Clark Kent,
+
+I hope this message finds you well. I came across your profile on LinkedIn and was impressed by your background and experience. As someone who is passionate about connecting with professionals in our industry, I believe that there is a great opportunity for us to learn from each other and potentially collaborate in the future.
+
+I would love to connect with you here on LinkedIn and explore ways in which we can support each other's professional growth. Please feel free to reach out if you have any questions or if"
