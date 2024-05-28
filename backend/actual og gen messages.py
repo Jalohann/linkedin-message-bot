@@ -19,14 +19,12 @@ CHARACTER_LIMITS = {
 def generate_message(name, role, message_type):
     prompt = f"Write a {'friendly and professional' if role == 'recruiter' else 'casual and friendly'} {message_type.replace('_', ' ')} for a LinkedIn user named {name}."
     try:
-        response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": "You are a helpful assistant."},
-                {"role": "user", "content": prompt},
-            ],
-            max_tokens=100,
-        )
+        response = client.chat.completions.create(model="gpt-3.5-turbo",
+        messages=[
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": prompt},
+        ],
+        max_tokens=100)
         message = response.choices[0].message.content.strip()
 
         # Ensure the message meets the character limit
@@ -35,10 +33,6 @@ def generate_message(name, role, message_type):
         )  # Default limit if not specified
         if len(message) > char_limit:
             message = message[:char_limit]
-
-        # Remove any "Subject:" prefix from the message
-        if message.lower().startswith("subject:"):
-            message = message[message.index("\n") + 1 :].strip()
 
         return message
     except openai.RateLimitError as e:

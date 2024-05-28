@@ -1,24 +1,3 @@
-username,role,messageType,message
-john_doe,recruiter,connection_request,"Hello John Doe,
-
-I hope this message finds you well. I came across your profile on LinkedIn and was intrigued by your experience and accomplishments in the industry. I would love to connect with you and learn more about your expertise and insights.
-
-It would be a pleasure to expand my network and potentially explore any synergies or opportunities for collaboration. I believe that connecting with like-minded professionals such as yourself can be mutually beneficial.
-
-I look forward to the possibility of connecting and exchanging ideas. Thank you for considering my"
-jane_smith,non-recruiter,dm,Hey Jane! 👋 Just wanted to reach out and say hi! I noticed we share some similar interests in our LinkedIn feed. Love connecting with like-minded professionals. Feel free to reach out if you ever want to chat or network. Have a great day! 😊
-peter_parker,recruiter,connection_request,"Hello Peter Parker,
-
-I hope this message finds you well. I came across your profile on LinkedIn and was impressed with your background and accomplishments in the field. I believe that connecting with professionals like yourself can be mutually beneficial for networking and potential opportunities.
-
-I would love to connect with you on LinkedIn and learn more about your experiences and insights in the industry. Your expertise would be valuable to me as I continue to grow in my own career.
-
-Looking forward to connecting with you and possibly exploring ways we can collaborate"
-bruce_wayne,non-recruiter,dm,Hey Bruce Wayne! 👋 Just wanted to reach out and say hi. Your profile caught my eye and I admire your work. Let me know if you ever want to connect or chat about industry insights. Have a great day! 😊
-clark_kent,recruiter,connection_request,"Hello Clark,
-
-I hope this message finds you well. I came across your profile on LinkedIn and was impressed by your experience and expertise in the field. I believe that connecting with professionals like yourself will be a valuable opportunity for both of us to expand our networks and potentially explore collaboration in the future.
-
-I would be honored to have the chance to connect with you on LinkedIn. I look forward to the possibility of engaging in insightful discussions and learning from your wealth of knowledge.
-
-Thank you for considering my connection request"
+username,profileUrl,role,messageType,message
+anishkaapeter,https://www.linkedin.com/in/anishkaapeter/,non-recruiter,connection_request,Hi Anishkaa! I came across your profile on LinkedIn and was impressed by your background in [mention something specific like marketing or project management]. I would love to connect and learn more ab
+joseph_rajadurai,https://www.linkedin.com/in/joseph-rajadurai/,non-recruiter,connection_request,Hey Joseph! I came across your profile and was really impressed by your experience in the industry. It would be great to connect and learn from each other. Looking forward to being connected!

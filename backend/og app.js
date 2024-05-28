@@ -14,13 +14,15 @@ app.use(cors());
 
 const mongoURI = "mongodb://localhost:27017/linkedin-bot";
 mongoose
-  .connect(mongoURI)
+  .connect(mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log("MongoDB connected..."))
   .catch((err) => console.log(err));
 
 const MessageSchema = new mongoose.Schema({
   username: String,
-  profileUrl: String,
   role: String,
   messageType: String,
   message: String,
@@ -95,70 +97,9 @@ app.get("/messages", async (req, res) => {
   res.status(200).json(messages);
 });
 
-app.post("/clear-messages", async (req, res) => {
-  try {
-    await Message.deleteMany({});
-    res.status(200).send("Messages cleared successfully.");
-  } catch (error) {
-    res.status(500).send("Error clearing messages.");
-  }
-});
-
-app.delete("/messages/:id", async (req, res) => {
-  try {
-    await Message.findByIdAndDelete(req.params.id);
-    res.status(200).send("Message deleted successfully.");
-  } catch (error) {
-    res.status(500).send("Error deleting message.");
-  }
-});
-
 app.post("/send-messages", async (req, res) => {
-  try {
-    const messages = await Message.find({ status: { $ne: "Sent" } });
-
-    for (const message of messages) {
-      try {
-        const result = await new Promise((resolve, reject) => {
-          const pythonProcess = spawn(
-            path.join(__dirname, "venv", "bin", "python3"),
-            ["linkedin_automation.py", message.profileUrl, message.message]
-          );
-
-          pythonProcess.stdout.on("data", (data) => {
-            console.log(`stdout: ${data}`);
-          });
-
-          pythonProcess.stderr.on("data", (data) => {
-            console.error(`stderr: ${data}`);
-          });
-
-          pythonProcess.on("close", (code) => {
-            if (code === 0) {
-              resolve(true);
-            } else {
-              reject(new Error(`Process exited with code ${code}`));
-            }
-          });
-        });
-
-        if (result) {
-          await Message.findByIdAndUpdate(message._id, { status: "Sent" });
-        }
-      } catch (error) {
-        console.error(`Error sending message to ${message.username}:`, error);
-        await Message.findByIdAndUpdate(message._id, {
-          status: "Failed",
-          error: error.message,
-        });
-      }
-    }
-
-    res.status(200).send("Messages sent successfully.");
-  } catch (error) {
-    console.error("Error sending messages:", error);
-    res.status(500).send("Error sending messages.");
-  }
+  // Logic to send messages using LinkedIn API
+  res.status(200).send("Messages sent successfully.");
 });
 
 const PORT = process.env.PORT || 5001;

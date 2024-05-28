@@ -1,0 +1,12 @@
+username,role,messageType,message
+john_doe,recruiter,connection_request,"Hello John,
+
+I hope this message finds you well! I came across your profile on LinkedIn and was impressed by your experience and achievements in the industry. I believe that connecting with profession"
+jane_smith,non-recruiter,dm,Hey Jane! 👋 Just came across your profile and wanted to reach out and connect. Your experience looks impressive! Let's connect and chat more about our professional journeys. Have a great day! 😊 #Networking #Connections
+peter_parker,recruiter,connection_request,"Hello Peter Parker,
+
+I hope this message finds you well. I came across your profile on LinkedIn and was impressed by your experience and expertise in [specific field or industry]. I believe that conne"
+bruce_wayne,non-recruiter,dm,"Hey Bruce! 👋 Just wanted to say hi and connect here on LinkedIn. Hope you're having a fantastic day! If there's anything I can assist you with or if you'd just like to chat, feel free to reach out. Have a great week ahead! 😊🦇"
+clark_kent,recruiter,connection_request,"Hello Clark,
+
+I hope this message finds you well. I came across your profile on LinkedIn and was impressed by your experience and accomplishments in the [mention specific field or industry]. As someon"

@@ -7,8 +7,6 @@ import sys
 import time
 import os
 
-# Set your OpenAI API key
-
 # Define character limits for different message types
 CHARACTER_LIMITS = {
     "connection_request": 200,  # Example limit for connection requests
@@ -35,10 +33,6 @@ def generate_message(name, role, message_type):
         )  # Default limit if not specified
         if len(message) > char_limit:
             message = message[:char_limit]
-
-        # Remove any "Subject:" prefix from the message
-        if message.lower().startswith("subject:"):
-            message = message[message.index("\n") + 1 :].strip()
 
         return message
     except openai.RateLimitError as e:
