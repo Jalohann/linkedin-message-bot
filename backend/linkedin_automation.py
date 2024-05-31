@@ -40,6 +40,12 @@ def linkedin_login():
     print("Logged into LinkedIn.")
 
 
+def ensure_element_is_visible_and_clickable(element):
+    driver.execute_script("arguments[0].scrollIntoView(true);", element)
+    WebDriverWait(driver, 10).until(EC.visibility_of(element))
+    WebDriverWait(driver, 10).until(EC.element_to_be_clickable(element))
+
+
 def send_connection_request(profile_url, message):
     try:
         driver.get(profile_url)
@@ -51,20 +57,24 @@ def send_connection_request(profile_url, message):
                 EC.element_to_be_clickable(
                     (
                         By.XPATH,
-                        "//button[@class='artdeco-button artdeco-button--2 artdeco-button--primary ember-view pvs-profile-actions__action' and contains(@aria-label, 'Invite')]",
+                        "//button[contains(@aria-label, 'Invite') and contains(@class, 'artdeco-button--primary')]",
                     )
                 )
             )
-        except:
+            print("Found primary Connect button.")
+        except Exception as e:
+            print(f"Primary Connect button not found: {e}")
             connect_button = WebDriverWait(driver, 10).until(
                 EC.element_to_be_clickable(
                     (
                         By.XPATH,
-                        "//button[@class='artdeco-button artdeco-button--muted artdeco-button--2 artdeco-button--secondary ember-view' and contains(@aria-label, 'Invite')]",
+                        "//button[contains(@aria-label, 'Invite') and contains(@class, 'artdeco-button--secondary')]",
                     )
                 )
             )
+            print("Found secondary Connect button.")
 
+        ensure_element_is_visible_and_clickable(connect_button)
         connect_button.click()
         print("Clicked on Connect button.")
 
@@ -73,12 +83,14 @@ def send_connection_request(profile_url, message):
                 (By.XPATH, "//button[contains(@aria-label, 'Add a note')]")
             )
         )
+        ensure_element_is_visible_and_clickable(add_note_button)
         add_note_button.click()
         print("Clicked on Add a note button.")
 
         message_field = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.TAG_NAME, "textarea"))
         )
+        ensure_element_is_visible_and_clickable(message_field)
         message_field.send_keys(message)
         print("Entered the message.")
 
@@ -90,6 +102,7 @@ def send_connection_request(profile_url, message):
                 )
             )
         )
+        ensure_element_is_visible_and_clickable(send_button)
         send_button.click()
         time.sleep(2)
         print("Connection request sent successfully.")

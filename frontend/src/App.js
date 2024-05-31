@@ -14,6 +14,13 @@ import {
   LinearProgress,
   Snackbar,
   Alert,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Checkbox,
+  FormControlLabel,
 } from "@mui/material";
 
 const App = () => {
@@ -23,6 +30,10 @@ const App = () => {
   const [sending, setSending] = useState(false);
   const [error, setError] = useState("");
   const [showSnackbar, setShowSnackbar] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [profileUrl, setProfileUrl] = useState("");
+  const [useChatGPT, setUseChatGPT] = useState(false);
+  const [chatGPTPrompt, setChatGPTPrompt] = useState("");
 
   const handleFileUpload = (e) => {
     setFile(e.target.files[0]);
@@ -74,7 +85,11 @@ const App = () => {
         if (response.status === 200) {
           setMessages((prevMessages) => {
             const newMessages = [...prevMessages];
-            newMessages[i].status = "Sent";
+            if (response.data.status === "Sent without a note") {
+              newMessages[i].status = "Sent without a note";
+            } else {
+              newMessages[i].status = "Sent";
+            }
             return newMessages;
           });
         }
@@ -115,6 +130,57 @@ const App = () => {
     setShowSnackbar(false);
   };
 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleAddMessage = async () => {
+    const role = determineRoleFromUrl(profileUrl);
+    const messageType = "connection_request";
+    const message = useChatGPT
+      ? await generateMessageFromChatGPT(chatGPTPrompt)
+      : "This is the default message";
+
+    const newMessage = {
+      username: extractUsernameFromUrl(profileUrl),
+      profileUrl,
+      role,
+      messageType,
+      message,
+      status: "Pending",
+      error: "",
+    };
+
+    try {
+      await axios.post("http://localhost:5001/add-message", newMessage);
+      fetchMessages();
+      handleClose();
+    } catch (error) {
+      handleError("Error adding message.");
+    }
+  };
+
+  const extractUsernameFromUrl = (url) => {
+    const parts = url.split("/");
+    return parts[parts.length - 2] || parts[parts.length - 1];
+  };
+
+  const determineRoleFromUrl = (url) => {
+    // Add logic to determine the role based on the profile URL
+    // For now, let's return a placeholder role
+    return "Unknown";
+  };
+
+  const generateMessageFromChatGPT = async (prompt) => {
+    // Add logic to generate message using ChatGPT
+    // For now, let's return a placeholder message
+    return "Generated message from ChatGPT";
+  };
+
   useEffect(() => {
     fetchMessages();
   }, [fetchMessages]);
@@ -138,6 +204,9 @@ const App = () => {
       >
         Clear Messages
       </Button>
+      <Button variant="contained" color="primary" onClick={handleClickOpen}>
+        Add Message
+      </Button>
       {sending && <LinearProgress variant="determinate" value={progress} />}
       <Paper>
         <Table>
@@ -157,8 +226,7 @@ const App = () => {
             {messages.map((message, index) => (
               <TableRow key={index}>
                 <TableCell>{message.username}</TableCell>
-                <TableCell>{message.profileUrl}</TableCell>{" "}
-                {/* Ensure profileUrl is displayed */}
+                <TableCell>{message.profileUrl}</TableCell>
                 <TableCell>{message.role}</TableCell>
                 <TableCell>{message.messageType}</TableCell>
                 <TableCell>
@@ -205,6 +273,52 @@ const App = () => {
           {error}
         </Alert>
       </Snackbar>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Add Message</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Add the LinkedIn Profile URL of the individual you want to connect
+            with. If you want to add profiles in bulk, create a CSV using the
+            appropriate format, or press the advanced button to add profiles in
+            bulk.
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            label="Profile URL"
+            type="url"
+            fullWidth
+            value={profileUrl}
+            onChange={(e) => setProfileUrl(e.target.value)}
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={useChatGPT}
+                onChange={(e) => setUseChatGPT(e.target.checked)}
+              />
+            }
+            label="Use ChatGPT"
+          />
+          <TextField
+            margin="dense"
+            label="ChatGPT Prompt"
+            type="text"
+            fullWidth
+            value={chatGPTPrompt}
+            onChange={(e) => setChatGPTPrompt(e.target.value)}
+            disabled={!useChatGPT}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleAddMessage} color="primary">
+            Add
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 };

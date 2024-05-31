@@ -135,15 +135,21 @@ app.post("/send-messages", async (req, res) => {
 
           pythonProcess.on("close", (code) => {
             if (code === 0) {
-              resolve(true);
+              resolve("Sent");
+            } else if (code === 1) {
+              resolve("Sent without a note");
             } else {
               reject(new Error(`Process exited with code ${code}`));
             }
           });
         });
 
-        if (result) {
+        if (result === "Sent") {
           await Message.findByIdAndUpdate(message._id, { status: "Sent" });
+        } else if (result === "Sent without a note") {
+          await Message.findByIdAndUpdate(message._id, {
+            status: "Sent without a note",
+          });
         }
       } catch (error) {
         console.error(`Error sending message to ${message.username}:`, error);
@@ -158,6 +164,27 @@ app.post("/send-messages", async (req, res) => {
   } catch (error) {
     console.error("Error sending messages:", error);
     res.status(500).send("Error sending messages.");
+  }
+});
+
+app.post("/add-message", async (req, res) => {
+  const { username, profileUrl, role, messageType, message } = req.body;
+
+  const newMessage = new Message({
+    username,
+    profileUrl,
+    role,
+    messageType,
+    message,
+    status: "Pending",
+    error: "",
+  });
+
+  try {
+    await newMessage.save();
+    res.status(200).send("Message added successfully.");
+  } catch (error) {
+    res.status(500).send("Error adding message.");
   }
 });
 
