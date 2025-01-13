@@ -1,7 +1,7 @@
 import openai
 from openai import OpenAI
 
-client = OpenAI(api_key="sk-proj-JLobBFVaA2SoeO8iIWZRT3BlbkFJ8t47GmMmhRhOSBraqoOX")
+client = OpenAI(api_key=)
 import pandas as pd
 import sys
 import time
